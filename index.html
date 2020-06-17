@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Sunset Drive</title>
+  </head>
+  <body>
+    <!-- <script src="projection.js"></script> -->
+    <script src="./lib/jquery-2.1.1.js"></script>
+    <script src="./lib/util.js"></script>
+    <script src="./lib/game.js"></script>
+    <link href="./lib/styling.css" rel="stylesheet" type="text/css" />
+
+    <div id="Instructions" style="color: gray;">
+      <h1>Game Instructions:</h1>
+      <p>Press the arrow keys to drive.</p>
+      <p>Avoid <b><span style="color: red;">red</span> </b> and <b><span style="color: black;">black</span> </b>   squares</b>: running over
+      red squares will slow you significantly and running over black squares will
+      cause you to lose immediately.</p>
+      <p>However, try to run over the <b><span style="color: rgb(22, 240, 22);">green</span></b>  squares
+      for a little speed boost!</p>
+      <p>Try to cross the finish line in the least time
+      possible. Can you beat your friends?</p>
+
+      <button id="reset">
+        Restart
+      </button>
+    </div>
+    <canvas></canvas>
+
+    <script>
+      var canvasEl = document.getElementsByTagName("canvas")[0];
+      var context = canvasEl.getContext("2d");
+      canvasEl.height = (window.innerHeight - 10) / 1.2;
+      canvasEl.width = (window.innerWidth - 10) / 2;
+
+      function restart() {
+        var newGame = new Racer.Game(context, canvasEl.width, canvasEl.height);
+        newGame.run();
+        $(document).on('keydown', newGame.keyPressed.bind(newGame));
+        $(document).on('keyup',  newGame.keyUnpressed.bind(newGame));
+      };
+      restart();
+      $('#reset').on('click', restart);
+
+    </script>
+  </body>
+
+
+</html>
